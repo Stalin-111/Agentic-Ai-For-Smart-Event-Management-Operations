@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Register attendee | EventFlow{% endblock %}
+{% block content %}
+<section class="page-heading"><div><p class="eyebrow">ATTENDEE MANAGEMENT</p><h1>Register attendee</h1><p class="text-muted mb-0">Create a secure attendee profile and generate a unique event QR code.</p></div><span class="status-pill">Step 1 of 1</span></section>
+<div class="row g-4 align-items-start">
+  <div class="col-lg-8">
+    <form method="post" class="card form-card border-0">
+      <div class="card-body p-4 p-md-5">
+        <div class="form-section-title"><span>01</span><div><h2>Attendee details</h2><p>Use the attendee’s real contact details for event updates and check-in.</p></div></div>
+        <div class="row g-3 mt-1">
+          {% for label, name, type in [('Full name','name','text'),('Email address','email','email'),('Phone number','phone','tel'),('Age','age','number'),('College / company','organization','text'),('City','city','text'),('Event name','event','text')] %}
+          <div class="col-md-6 {% if name == 'event' %}col-lg-12{% endif %}"><label class="form-label" for="{{ name }}">{{ label }}</label><input required class="form-control" id="{{ name }}" name="{{ name }}" type="{{ type }}" {% if name == 'age' %}min="1" max="120"{% endif %} value="{{ request.form.get(name,'') }}"></div>
+          {% endfor %}
+          <div class="col-md-6"><label class="form-label" for="gender">Gender</label><select required class="form-select" id="gender" name="gender"><option value="">Select gender</option><option>Female</option><option>Male</option><option>Non-binary</option><option>Prefer not to say</option></select></div>
+          <div class="col-md-6"><label class="form-label" for="category">Category</label><select required class="form-select" id="category" name="category"><option value="">Select category</option><option>Student</option><option>Professional</option><option>Speaker</option><option>Volunteer</option></select></div>
+        </div>
+        <div class="form-action"><p class="mb-0">A QR code will be created automatically after registration.</p><button class="btn btn-primary" type="submit">Complete registration <span aria-hidden="true">→</span></button></div>
+      </div>
+    </form>
+  </div>
+  <div class="col-lg-4"><aside class="register-aside"><span class="aside-icon">✓</span><h2>Ready for check-in</h2><p>Every confirmed attendee receives a unique QR token that can be used at the event entrance.</p><hr><div class="aside-item"><strong>Fast</strong><span>Capture attendee information in one place.</span></div><div class="aside-item"><strong>Secure</strong><span>Data is saved to your local event database.</span></div><div class="aside-item"><strong>Insightful</strong><span>Profiles feed directly into your dashboard analytics.</span></div></aside></div>
+</div>
+{% endblock %}
